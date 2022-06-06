@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://sprites/yellowbird-downflap.png" type="Texture" id=1]
 [ext_resource path="res://sprites/yellowbird-midflap.png" type="Texture" id=2]
 [ext_resource path="res://sprites/yellowbird-upflap.png" type="Texture" id=3]
-[ext_resource path="res://scenes/Player.gd" type="Script" id=4]
+[ext_resource path="res://scripts/player.gd" type="Script" id=4]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -13,10 +13,41 @@ animations = [ {
 "speed": 8.0
 } ]
 
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "rotate_down"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 45.0 ]
+}
+
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 34, 24 )
 
 [node name="Player" type="KinematicBody2D"]
+collision_mask = 6
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_group_": true
@@ -26,7 +57,16 @@ __meta__ = {
 scale = Vector2( 2, 2 )
 frames = SubResource( 1 )
 animation = "flap"
-playing = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 4 )
+anims/rotate_down = SubResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
