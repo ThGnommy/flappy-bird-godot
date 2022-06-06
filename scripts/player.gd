@@ -5,13 +5,13 @@ const gravity := 30.0
 const speed := 200
 const up_speed := -10
 var velocity := Vector2.ZERO
-
-var gameManager = GameManager.new()
+onready var gameover_msg = get_node("../CanvasLayer/GameoverMsg")
+onready var gamemanager = get_parent()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-#	position.x = viewport.x / 2
-#	position.y = viewport.y / 2
+	#position.x = viewport.x / 2
+	#position.y = viewport.y / 2
 	set_process(false)
 	pass
 	
@@ -23,6 +23,8 @@ func _process(delta: float) -> void:
 
 	# Game over
 	if collision:
+		gameover_msg.show()
+		gamemanager.gameover = true
 		set_process(false)
  
  # set a max velocity
@@ -35,7 +37,6 @@ func _process(delta: float) -> void:
 	# set rotation when falling
 	if velocity.y > 3:
 		$AnimationPlayer.play("rotate_down")
-
 
 	if velocity.y < 3:
 		$AnimationPlayer.play("RESET")
