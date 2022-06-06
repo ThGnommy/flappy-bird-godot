@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://sprites/pipe-green.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 24, 160 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 24, 160 )
+
+[node name="Pipes" type="Node2D"]
+
+[node name="pipe_down" type="Sprite" parent="."]
+position = Vector2( 0, 424 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="pipe_down"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pipe_down/StaticBody2D"]
+shape = SubResource( 1 )
+
+[node name="pipe_up" type="Sprite" parent="."]
+position = Vector2( 0, -424 )
+rotation = 3.14159
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="pipe_up"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pipe_up/StaticBody2D"]
+position = Vector2( -1.51398e-05, 0 )
+shape = SubResource( 2 )

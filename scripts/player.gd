@@ -2,8 +2,8 @@ extends KinematicBody2D
 
 onready var viewport: Vector2 = get_viewport().size
 const gravity := 30.0
-const speed := 200
-const up_speed := -10
+const speed := 150
+const up_speed := -6
 var velocity := Vector2.ZERO
 onready var gameover_msg = get_node("../CanvasLayer/GameoverMsg")
 onready var gamemanager = get_parent()
