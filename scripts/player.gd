@@ -27,6 +27,7 @@ func _process(delta: float) -> void:
 	# Game over
 	if collision:
 		anim_sprite.stop()
+		anim_tree.queue_free()
 		gameover_msg.show()
 		gamemanager.gameover = true
 		set_process(false)
@@ -39,7 +40,7 @@ func _process(delta: float) -> void:
 	lock_camera_position()
  
 	# set rotation when falling
-	if velocity.y > 6:
+	if velocity.y > 8:
 		anim_tree["parameters/Flappy/playback"].travel("rotate_down")
 
 	if velocity.y < 3:
