@@ -7,13 +7,16 @@ const up_speed := -6
 var velocity := Vector2.ZERO
 onready var gameover_msg = get_node("../CanvasLayer/GameoverMsg")
 onready var gamemanager = get_parent()
+onready var anim_sprite = $AnimatedSprite
+onready var anim_player = $AnimationPlayer
+onready var anim_tree = $AnimationTree
+onready var timer = $Timer
+onready var camera2d = $Camera2D
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#position.x = viewport.x / 2
-	#position.y = viewport.y / 2
 	set_process(false)
-	pass
 	
 func _process(delta: float) -> void:
 	velocity.x = speed * delta
@@ -23,6 +26,7 @@ func _process(delta: float) -> void:
 
 	# Game over
 	if collision:
+		anim_sprite.stop()
 		gameover_msg.show()
 		gamemanager.gameover = true
 		set_process(false)
@@ -35,16 +39,16 @@ func _process(delta: float) -> void:
 	lock_camera_position()
  
 	# set rotation when falling
-	if velocity.y > 3:
-		$AnimationPlayer.play("rotate_down")
+	if velocity.y > 6:
+		anim_tree["parameters/Flappy/playback"].travel("rotate_down")
 
 	if velocity.y < 3:
-		$AnimationPlayer.play("RESET")
-
+		anim_tree["parameters/Flappy/playback"].travel("rotate_up")		
+		pass
 
 func lock_camera_position():
-	$Camera2D.limit_bottom = viewport.y
-	$Camera2D.limit_top = 0
+	camera2d.limit_bottom = viewport.y
+	camera2d.limit_top = 0
 
 func jump():
  # avoid player jump too high
@@ -53,8 +57,10 @@ func jump():
 
 	if Input.is_action_just_pressed("jump"):
 		velocity.y = up_speed
-		$AnimatedSprite.play("flap")
-		$Timer.start()
+		anim_sprite.play("flap")
+		#anim_player.play("rotate_up")
+		#anim_tree.set("parameters/Blend/blend_amount", 1)
+		timer.start()
 
 func _on_Timer_timeout() -> void:
-	$AnimatedSprite.stop()
+	anim_sprite.stop()

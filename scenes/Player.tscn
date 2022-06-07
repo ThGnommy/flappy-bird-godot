@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://sprites/yellowbird-downflap.png" type="Texture" id=1]
 [ext_resource path="res://sprites/yellowbird-midflap.png" type="Texture" id=2]
@@ -40,11 +40,65 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0.0, 45.0 ]
+"values": [ 0.0, 40.0 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "rotate_up"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -40.0 ]
 }
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 34, 24 )
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "RESET"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "rotate_down"
+
+[sub_resource type="AnimationNodeAnimation" id=10]
+animation = "rotate_up"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachine" id=15]
+states/RESET/node = SubResource( 8 )
+states/RESET/position = Vector2( 148.5, 125.5 )
+states/rotate_down/node = SubResource( 9 )
+states/rotate_down/position = Vector2( 400.125, 66 )
+states/rotate_up/node = SubResource( 10 )
+states/rotate_up/position = Vector2( 400.25, 199 )
+transitions = [ "RESET", "rotate_down", SubResource( 11 ), "RESET", "rotate_up", SubResource( 12 ), "rotate_down", "rotate_up", SubResource( 13 ), "rotate_up", "rotate_down", SubResource( 14 ) ]
+start_node = "RESET"
+graph_offset = Vector2( -2.86372e-05, -1.19999 )
+
+[sub_resource type="AnimationNodeBlendTree" id=7]
+graph_offset = Vector2( -13.0042, 107.1 )
+nodes/Flappy/node = SubResource( 15 )
+nodes/Flappy/position = Vector2( 190, 160 )
+nodes/output/position = Vector2( 570, 170 )
+node_connections = [ "output", 0, "Flappy" ]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=16]
 
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 6
@@ -61,6 +115,7 @@ animation = "flap"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 4 )
 anims/rotate_down = SubResource( 3 )
+anims/rotate_up = SubResource( 5 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
@@ -68,5 +123,11 @@ one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 7 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/Flappy/playback = SubResource( 16 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

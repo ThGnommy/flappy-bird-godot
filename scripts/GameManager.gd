@@ -2,8 +2,11 @@ extends Node2D
 
 var game_started = false
 var gameover = false
+var can_create_pipe = false
 onready var ready_message = $CanvasLayer/GetReady
 onready var _player = get_node("Player")
+onready var timer = get_node("./PipesTimer")
+var pipe = preload("res://scenes/pipe.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -17,6 +20,26 @@ func _process(delta: float) -> void:
 		game_started = true
 		_player.set_process(true)
 		_player.jump()
+		can_create_pipe = true
 		
 	if Input.is_action_pressed("jump") and gameover == true:
 		get_tree().reload_current_scene()
+	
+	if can_create_pipe == true:
+		generate_pipe()
+
+
+func generate_pipe():
+	timer.start()
+	can_create_pipe = false
+
+
+func _on_PipesTimer_timeout() -> void:
+	
+	if gameover == true:
+		return
+	
+	var new_pipe = pipe.instance()
+	new_pipe.position.x = _player.position.x + 1000
+	add_child(new_pipe)
+	can_create_pipe = true
