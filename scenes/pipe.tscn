@@ -18,6 +18,7 @@ script = ExtResource( 2 )
 [node name="pipe_down" type="Sprite" parent="."]
 position = Vector2( 0, 424 )
 scale = Vector2( 2, 2 )
+z_index = -100
 texture = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -28,10 +29,27 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pipe_down/StaticBody2D"]
 shape = SubResource( 1 )
 
+[node name="pipe_down2" type="Sprite" parent="."]
+position = Vector2( 0, 808 )
+rotation = 3.14159
+scale = Vector2( 2, 2 )
+z_index = -100
+texture = ExtResource( 1 )
+flip_h = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="pipe_down2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pipe_down2/StaticBody2D"]
+shape = SubResource( 1 )
+
 [node name="pipe_up" type="Sprite" parent="."]
 position = Vector2( 0, -424 )
 rotation = 3.14159
 scale = Vector2( 2, 2 )
+z_index = -100
 texture = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -40,6 +58,22 @@ __meta__ = {
 [node name="StaticBody2D" type="StaticBody2D" parent="pipe_up"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pipe_up/StaticBody2D"]
+position = Vector2( -1.51398e-05, 0 )
+shape = SubResource( 2 )
+
+[node name="pipe_up2" type="Sprite" parent="."]
+position = Vector2( 0, -936 )
+scale = Vector2( 2, 2 )
+z_index = -100
+texture = ExtResource( 1 )
+flip_h = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="pipe_up2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pipe_up2/StaticBody2D"]
 position = Vector2( -1.51398e-05, 0 )
 shape = SubResource( 2 )
 

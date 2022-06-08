@@ -25,12 +25,42 @@ scale = Vector2( 2.5, 2.35938 )
 texture = ExtResource( 1 )
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="Background"]
+visible = false
+show_behind_parent = true
+z_index = -7
+z_as_relative = false
 motion_mirroring = Vector2( 720, 0 )
 
 [node name="Base" type="Sprite" parent="Background/ParallaxLayer2"]
 position = Vector2( 360, 1136 )
 scale = Vector2( 2.14286, 1.35714 )
 texture = ExtResource( 2 )
+
+[node name="PipesContainer" type="ParallaxBackground" parent="."]
+layer = -99
+follow_viewport_enable = true
+scroll_base_scale = Vector2( 0, 1 )
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="PipesContainer"]
+
+[node name="Base" type="ParallaxBackground" parent="."]
+layer = -98
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Base"]
+motion_mirroring = Vector2( 720, 0 )
+
+[node name="Base" type="Sprite" parent="Base/ParallaxLayer"]
+position = Vector2( 360, 1136 )
+scale = Vector2( 2.14286, 1.35714 )
+texture = ExtResource( 2 )
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+show_behind_parent = true
+position = Vector2( 360, 600 )
+collision_mask = 2
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
 
 [node name="BaseCollider" type="StaticBody2D" parent="."]
 script = ExtResource( 4 )
@@ -62,13 +92,6 @@ margin_right = 8.0
 margin_bottom = -710.0
 rect_scale = Vector2( 2, 2 )
 texture = ExtResource( 7 )
-
-[node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 360, 600 )
-collision_mask = 2
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-current = true
 
 [node name="PipesTimer" type="Timer" parent="."]
 wait_time = 2.5
