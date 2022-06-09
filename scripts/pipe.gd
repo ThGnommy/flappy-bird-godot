@@ -5,6 +5,8 @@ onready var viewport: Vector2 = get_viewport().size
 onready var camera = get_node("../../../Player/Camera2D")
 onready var point_collector = $RayCast2D
 onready var gameManager = get_node("/root/Main")
+onready var sfx_collect_point = $sfx_collect_point
+
 var pos_to_delete: float = 0.0
 
 # Called when the node enters the scene tree for the first time.
@@ -22,3 +24,4 @@ func _process(delta: float) -> void:
 		if point_collector.is_colliding() and point_collector.get_collider().name == "Player":
 			point_collector.enabled = false
 			gameManager.point += 1
+			sfx_collect_point.play()

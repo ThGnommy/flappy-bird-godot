@@ -13,6 +13,9 @@ onready var anim_tree = $AnimationTree
 onready var timer = $Timer
 onready var camera2d = $Camera2D
 
+onready var sfx_jump = $sfx/sfx_jump
+onready var sfx_hit = $sfx/sfx_hit
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,11 +29,7 @@ func _process(delta: float) -> void:
 
 	# Game over
 	if collision:
-		anim_sprite.stop()
-		anim_tree.queue_free()
-		gameover_msg.show()
-		gamemanager.gameover = true
-		set_process(false)
+		die()
  
  # set a max velocity
 	if velocity.y > 20:
@@ -40,12 +39,21 @@ func _process(delta: float) -> void:
 	lock_camera_position()
  
 	# set rotation when falling
-	if velocity.y > 8:
+	if velocity.y > 9:
 		anim_tree["parameters/Flappy/playback"].travel("rotate_down")
 
 	if velocity.y < 3:
-		anim_tree["parameters/Flappy/playback"].travel("rotate_up")		
+		anim_tree["parameters/Flappy/playback"].travel("rotate_up")
 		pass
+
+func die():
+	anim_sprite.stop()
+	anim_tree.queue_free()
+	gameover_msg.show()
+	sfx_hit.play()
+	gamemanager.gameover = true
+	
+	set_process(false)
 
 func lock_camera_position():
 	camera2d.limit_bottom = viewport.y
@@ -62,6 +70,7 @@ func jump():
 		#anim_player.play("rotate_up")
 		#anim_tree.set("parameters/Blend/blend_amount", 1)
 		timer.start()
+		sfx_jump.play()
 
 func _on_Timer_timeout() -> void:
 	anim_sprite.stop()
