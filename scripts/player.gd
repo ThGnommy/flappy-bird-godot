@@ -5,7 +5,7 @@ const gravity := 30.0
 const speed := 150
 const up_speed := -6
 var velocity := Vector2.ZERO
-onready var gameover_msg = get_node("../CanvasLayer/GameoverMsg")
+onready var gameover_msg = get_node("../GameOverScreen/GameoverMsg")
 onready var gamemanager = get_parent()
 onready var anim_sprite = $AnimatedSprite
 onready var anim_player = $AnimationPlayer
@@ -15,7 +15,6 @@ onready var camera2d = $Camera2D
 
 onready var sfx_jump = $sfx/sfx_jump
 onready var sfx_hit = $sfx/sfx_hit
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

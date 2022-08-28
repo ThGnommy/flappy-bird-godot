@@ -3,17 +3,17 @@ extends Node2D
 var game_started = false
 var gameover = false
 var can_create_pipe = false
-onready var ready_message = $CanvasLayer/GetReady
-onready var _player = get_node("Player")
-onready var timer = get_node("./PipesTimer")
+onready var ready_message = $GetReadyScreen/GetReady
+onready var game_over_screen = $GameOverScreen/GameoverMsg
+onready var _player = $Player
+onready var timer = $PipesTimer
 var pipe = preload("res://scenes/pipe.tscn")
 onready var pipes_container = get_node("./PipesContainer/ParallaxLayer")
 export var point = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-
-	pass # Replace with function body.
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -26,7 +26,7 @@ func _process(delta: float) -> void:
 		
 	if Input.is_action_pressed("jump") and gameover == true:
 		get_tree().reload_current_scene()
-	
+		
 	if can_create_pipe == true:
 		generate_pipe()
 
@@ -35,7 +35,6 @@ func generate_pipe():
 	timer.start()
 	can_create_pipe = false
 
-
 func _on_PipesTimer_timeout() -> void:
 	if gameover == true:
 		return
@@ -43,5 +42,9 @@ func _on_PipesTimer_timeout() -> void:
 	var new_pipe = pipe.instance()
 	new_pipe.position.x = _player.position.x + 1000
 	pipes_container.add_child(new_pipe)
-	print("pipe created")
 	can_create_pipe = true
+
+func set_gameover() -> void: 
+	game_over_screen.show()
+
+

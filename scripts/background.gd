@@ -11,7 +11,6 @@ var time = OS.get_time()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print(time["hour"])
 	if time["hour"] > 18:
 		bg_night.show()
 	elif time["hour"] < 18:

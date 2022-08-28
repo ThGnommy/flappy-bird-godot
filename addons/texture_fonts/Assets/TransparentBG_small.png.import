@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/4.png-a6af2fa3155b472bad78aebd7ef66a95.stex"
+path="res://.import/TransparentBG_small.png-831547cc9a7eea4c3d8547ee68a417be.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/4.png"
-dest_files=[ "res://.import/4.png-a6af2fa3155b472bad78aebd7ef66a95.stex" ]
+source_file="res://addons/texture_fonts/Assets/TransparentBG_small.png"
+dest_files=[ "res://.import/TransparentBG_small.png-831547cc9a7eea4c3d8547ee68a417be.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

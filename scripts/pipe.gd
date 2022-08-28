@@ -6,6 +6,7 @@ onready var camera = get_node("../../../Player/Camera2D")
 onready var point_collector = $RayCast2D
 onready var gameManager = get_node("/root/Main")
 onready var sfx_collect_point = $sfx_collect_point
+onready var score = get_node("/root/Main/GetReadyScreen")
 
 var pos_to_delete: float = 0.0
 
@@ -24,4 +25,5 @@ func _process(delta: float) -> void:
 		if point_collector.is_colliding() and point_collector.get_collider().name == "Player":
 			point_collector.enabled = false
 			gameManager.point += 1
+			score.print_sprites()
 			sfx_collect_point.play()
